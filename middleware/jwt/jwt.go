@@ -1,11 +1,11 @@
 package jwt
 
 import (
-	"entry-task-web/pkg/code"
-	"entry-task-web/pkg/log"
-	"entry-task-web/pkg/util"
-	"github.com/dgrijalva/jwt-go" //nolint:goimports
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/util"
 	"net/http"
 )
 

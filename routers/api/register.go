@@ -1,12 +1,12 @@
 package api
 
 import (
-	"entry-task-web/pkg/app"
-	"entry-task-web/pkg/code"
-	"entry-task-web/pkg/log"
-	"entry-task-web/pkg/rpc"
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/app"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/rpc"
 	"net/http"
 )
 

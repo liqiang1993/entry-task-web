@@ -1,17 +1,17 @@
 package request
 
 import (
-	"entry-task-web/pkg/code"
-	"entry-task-web/pkg/log"
-	"github.com/aidarkhanov/nanoid/v2"
 	"github.com/gin-gonic/gin"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	nanoid "github.com/matoous/go-nanoid"
 	"net/http"
 )
 
 // GenRequestID 生成全局请求id
 func GenRequestID() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		requestID, err := nanoid.New()
+		requestID, err := nanoid.Nanoid()
 		if err != nil {
 			log.Warnf("gen nanoid failed:%s", err)
 

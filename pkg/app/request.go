@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/astaxie/beego/validation"
 
-	"entry-task-web/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
 )
 
 // MarkErrors logs error logs

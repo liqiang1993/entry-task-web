@@ -1,10 +1,9 @@
 package log
 
 import (
-	"entry-task-web/pkg/setting"
-
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
+	"github.com/natefinch/lumberjack"
 	"github.com/sirupsen/logrus"
-	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var log = logrus.New()

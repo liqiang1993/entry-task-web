@@ -13,7 +13,7 @@ lint:
 	golint ./...
 
 clean:
-	rm -rf entry-task-web
+	rm -rf github.com/lucky-cheerful-man/phoenix_gateway
 	go clean -i .
 
 help:

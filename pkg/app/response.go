@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/gin-gonic/gin"
 
-	"entry-task-web/pkg/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
 )
 
 type Gin struct {

@@ -2,13 +2,13 @@ package v1
 
 import (
 	"bytes"
-	"entry-task-web/pkg/app"
-	"entry-task-web/pkg/code"
-	"entry-task-web/pkg/log"
-	"entry-task-web/pkg/rpc"
-	"entry-task-web/pkg/upload"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/app"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/rpc"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/upload"
 	"io"
 	"net/http"
 )

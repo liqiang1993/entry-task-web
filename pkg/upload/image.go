@@ -1,8 +1,8 @@
 package upload
 
 import (
-	"entry-task-web/pkg/file"
-	"entry-task-web/pkg/setting"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/file"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
 	"strings"
 )
 

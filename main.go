@@ -1,13 +1,13 @@
 package main
 
 import (
-	"entry-task-web/pkg/log"
-	"entry-task-web/pkg/rpc"
-	"entry-task-web/pkg/setting"
-	"entry-task-web/pkg/util"
-	"entry-task-web/routers"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/rpc"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/util"
+	"github.com/lucky-cheerful-man/phoenix_gateway/routers"
 	"net/http"
 	"os"
 	"os/signal"

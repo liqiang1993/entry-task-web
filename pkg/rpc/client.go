@@ -2,10 +2,10 @@ package rpc
 
 import (
 	"context"
-	"entry-task-web/pkg/app"
-	"entry-task-web/pkg/log"
-	"entry-task-web/pkg/setting"
 	"fmt"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/app"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
 	"google.golang.org/grpc"
 	"time"
 )

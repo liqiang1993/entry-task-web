@@ -1,10 +1,9 @@
 package util
 
 import (
-	"entry-task-web/pkg/setting"
+	"github.com/golang-jwt/jwt"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
 	"time"
-
-	"github.com/dgrijalva/jwt-go"
 )
 
 var jwtSecret []byte

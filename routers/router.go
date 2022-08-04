@@ -1,12 +1,12 @@
 package routers
 
 import (
-	"entry-task-web/middleware/jwt"
-	"entry-task-web/middleware/request"
 	"github.com/gin-gonic/gin" //nolint:goimports
+	"github.com/lucky-cheerful-man/phoenix_gateway/middleware/jwt"
+	"github.com/lucky-cheerful-man/phoenix_gateway/middleware/request"
 
-	"entry-task-web/routers/api"
-	"entry-task-web/routers/api/v1"
+	"github.com/lucky-cheerful-man/phoenix_gateway/routers/api"
+	"github.com/lucky-cheerful-man/phoenix_gateway/routers/api/v1"
 )
 
 // InitRouter 初始化路由信息
