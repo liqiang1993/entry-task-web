@@ -1,8 +1,7 @@
-package upload
+package util
 
 import (
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/file"
 	"strings"
 )
 
@@ -13,7 +12,7 @@ func CheckImageSize(size int) bool {
 
 // CheckImageExt 检查扩展是否合法
 func CheckImageExt(fileName string) bool {
-	ext := file.GetExt(fileName)
+	ext := GetExt(fileName)
 	for _, allowExt := range config.GetGlobalConfig().AppSetting.ImageAllowExt {
 		if strings.EqualFold(allowExt, ext) {
 			return true

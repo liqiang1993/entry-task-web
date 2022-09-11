@@ -1,4 +1,4 @@
-package code
+package constant
 
 type ErrorStruct struct {
 	Code int32

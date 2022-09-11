@@ -1,8 +1,7 @@
-package app
+package util
 
 import (
 	"github.com/astaxie/beego/validation"
-
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 )
 

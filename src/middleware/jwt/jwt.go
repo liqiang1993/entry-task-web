@@ -3,7 +3,7 @@ package jwt
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/constant"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/util"
 	"net/http"
@@ -12,9 +12,9 @@ import (
 // JWT is jwt middleware
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var resCode code.ErrorStruct
+		var resCode constant.ErrorStruct
 		var data interface{}
-		resCode = code.Success
+		resCode = constant.Success
 
 		token := c.Query("token")
 		if token == "" {
@@ -22,7 +22,7 @@ func JWT() gin.HandlerFunc {
 		}
 
 		if token == "" {
-			resCode = code.InvalidParams
+			resCode = constant.InvalidParams
 		} else {
 			raw, err := util.ParseToken(token)
 			if err == nil {
@@ -30,14 +30,14 @@ func JWT() gin.HandlerFunc {
 			} else {
 				switch err.(*jwt.ValidationError).Errors {
 				case jwt.ValidationErrorExpired:
-					resCode = code.ErrorAuthCheckTokenTimeout
+					resCode = constant.ErrorAuthCheckTokenTimeout
 				default:
-					resCode = code.ErrorAuthCheckTokenFail
+					resCode = constant.ErrorAuthCheckTokenFail
 				}
 			}
 		}
 
-		if resCode != code.Success {
+		if resCode != constant.Success {
 			var requestID string
 			id, ok := c.Get("requestId")
 			if !ok {
@@ -48,9 +48,9 @@ func JWT() gin.HandlerFunc {
 
 			log.Warnf("%s auth failed:%+v", requestID, resCode)
 			c.JSON(http.StatusUnauthorized, gin.H{
-				"code": resCode.Code,
-				"msg":  resCode.Msg,
-				"data": data,
+				"constant": resCode.Code,
+				"msg":      resCode.Msg,
+				"data":     data,
 			})
 
 			c.Abort()

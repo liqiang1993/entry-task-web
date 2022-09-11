@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/routers"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/routers"
 	"net/http"
 	"os"
 	"os/signal"

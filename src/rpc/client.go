@@ -3,9 +3,10 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/app"
+	pb "github.com/lucky-cheerful-man/phoenix_apis/protobuf.pb/user_info_manage"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/util"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"time"
@@ -14,6 +15,7 @@ import (
 var GrpcClient UserServiceClient
 
 func init() {
+	pb.UserService
 	conn, err := grpc.Dial(fmt.Sprintf(":%d", config.GetGlobalConfig().DaoServerSetting.GrpcPort),
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -54,7 +56,7 @@ func Auth(requestID string, name string, password string) (string, string, error
 }
 
 // GetProfile 查询用户的属性信息
-func GetProfile(requestID string, name string) (info *app.ProfileInfo, err error) {
+func GetProfile(requestID string, name string) (info *util.ProfileInfo, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(),
 		time.Duration(config.GetGlobalConfig().AppSetting.DeadlineSecond)*time.Second)
 	defer cancel()
@@ -65,7 +67,7 @@ func GetProfile(requestID string, name string) (info *app.ProfileInfo, err error
 		return nil, err
 	}
 
-	return &app.ProfileInfo{Nickname: rsp.Nickname, ImageID: rsp.ImageID}, nil
+	return &util.ProfileInfo{Nickname: rsp.Nickname, ImageID: rsp.ImageID}, nil
 }
 
 // GetHeadImage 查询用户的头像信息

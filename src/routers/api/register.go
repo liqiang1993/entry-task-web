@@ -3,10 +3,10 @@ package api
 import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/app"
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/constant"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/rpc"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/util"
 	"net/http"
 )
 
@@ -17,11 +17,11 @@ type registerInfo struct {
 
 // Register 注册
 func Register(c *gin.Context) {
-	appG := app.Gin{C: c}
+	appG := util.Gin{C: c}
 	id, ok := c.Get("requestId")
 	if !ok {
 		log.Errorf("get requestId failed")
-		appG.Response(http.StatusInternalServerError, code.Error, nil)
+		appG.Response(http.StatusInternalServerError, constant.Error, nil)
 		return
 	}
 	requestID := id.(string)
@@ -33,16 +33,16 @@ func Register(c *gin.Context) {
 	a := registerInfo{Name: name, Password: password}
 	ok, _ = valid.Valid(&a)
 	if !ok {
-		app.MarkErrors(requestID, valid.Errors)
-		appG.Response(http.StatusBadRequest, code.InvalidParams, nil)
+		util.MarkErrors(requestID, valid.Errors)
+		appG.Response(http.StatusBadRequest, constant.InvalidParams, nil)
 		return
 	}
 
 	err := rpc.Register(requestID, name, password)
 	if err != nil {
-		appG.Response(http.StatusInternalServerError, code.ErrorRegisterFailed, nil)
+		appG.Response(http.StatusInternalServerError, constant.ErrorRegisterFailed, nil)
 		return
 	}
 
-	appG.Response(http.StatusOK, code.Success, map[string]string{})
+	appG.Response(http.StatusOK, constant.Success, map[string]string{})
 }

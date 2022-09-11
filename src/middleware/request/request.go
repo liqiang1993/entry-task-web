@@ -2,7 +2,7 @@ package request
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/constant"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 	nanoid "github.com/matoous/go-nanoid"
 	"net/http"
@@ -17,9 +17,9 @@ func GenRequestID() gin.HandlerFunc {
 
 			var data interface{}
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"code": code.Error.Code,
-				"msg":  code.Error.Msg,
-				"data": data,
+				"constant": constant.Error.Code,
+				"msg":      constant.Error.Msg,
+				"data":     data,
 			})
 
 			c.Abort()

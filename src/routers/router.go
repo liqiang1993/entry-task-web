@@ -2,12 +2,11 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin" //nolint:goimports
-	"github.com/lucky-cheerful-man/phoenix_gateway/middleware/jwt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/middleware/request"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
-
-	"github.com/lucky-cheerful-man/phoenix_gateway/routers/api"
-	"github.com/lucky-cheerful-man/phoenix_gateway/routers/api/v1"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/middleware/jwt"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/middleware/request"
+	api2 "github.com/lucky-cheerful-man/phoenix_gateway/src/routers/api"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/routers/api/v1"
 )
 
 func init() {
@@ -19,8 +18,8 @@ func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.Use(request.GenRequestID())
-	r.POST("/register", api.Register)
-	r.POST("/login", api.GetAuth)
+	r.POST("/register", api2.Register)
+	r.POST("/login", api2.GetAuth)
 
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())

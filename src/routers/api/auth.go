@@ -1,8 +1,7 @@
 package api
 
 import (
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/app"
-	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/constant"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/rpc"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/util"
@@ -20,11 +19,11 @@ type auth struct {
 
 // GetAuth 登陆认证
 func GetAuth(c *gin.Context) {
-	appG := app.Gin{C: c}
+	appG := util.Gin{C: c}
 	id, ok := c.Get("requestId")
 	if !ok {
 		log.Errorf("get requestId failed")
-		appG.Response(http.StatusInternalServerError, code.Error, nil)
+		appG.Response(http.StatusInternalServerError, constant.Error, nil)
 		return
 	}
 	requestID := id.(string)
@@ -37,24 +36,24 @@ func GetAuth(c *gin.Context) {
 	ok, _ = valid.Valid(&a)
 
 	if !ok {
-		app.MarkErrors(requestID, valid.Errors)
-		appG.Response(http.StatusBadRequest, code.InvalidParams, nil)
+		util.MarkErrors(requestID, valid.Errors)
+		appG.Response(http.StatusBadRequest, constant.InvalidParams, nil)
 		return
 	}
 
 	nickname, image, err := rpc.Auth(requestID, name, password)
 	if err != nil {
-		appG.Response(http.StatusBadRequest, code.InvalidParams, nil)
+		appG.Response(http.StatusBadRequest, constant.InvalidParams, nil)
 		return
 	}
 
 	token, err := util.GenerateToken(name, password)
 	if err != nil {
-		appG.Response(http.StatusInternalServerError, code.ErrorAuthToken, nil)
+		appG.Response(http.StatusInternalServerError, constant.ErrorAuthToken, nil)
 		return
 	}
 
-	appG.Response(http.StatusOK, code.Success, map[string]string{
+	appG.Response(http.StatusOK, constant.Success, map[string]string{
 		"token":    token,
 		"nickname": nickname,
 		"image":    image,
