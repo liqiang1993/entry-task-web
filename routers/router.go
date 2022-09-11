@@ -4,10 +4,15 @@ import (
 	"github.com/gin-gonic/gin" //nolint:goimports
 	"github.com/lucky-cheerful-man/phoenix_gateway/middleware/jwt"
 	"github.com/lucky-cheerful-man/phoenix_gateway/middleware/request"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
 
 	"github.com/lucky-cheerful-man/phoenix_gateway/routers/api"
 	"github.com/lucky-cheerful-man/phoenix_gateway/routers/api/v1"
 )
+
+func init() {
+	gin.SetMode(config.GetGlobalConfig().ServerSetting.RunMode)
+}
 
 // InitRouter 初始化路由信息
 func InitRouter() *gin.Engine {

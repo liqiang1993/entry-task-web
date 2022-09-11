@@ -1,4 +1,4 @@
-package setting
+package config
 
 import (
 	"fmt"
@@ -25,8 +25,6 @@ type App struct {
 	LogCompress   bool   // 是否压缩日志，默认是不压缩。这里设置为true，压缩日志
 }
 
-var AppSetting = &App{}
-
 type Server struct {
 	RunMode      string
 	HttpPort     int
@@ -34,37 +32,45 @@ type Server struct {
 	WriteTimeout time.Duration
 }
 
-var ServerSetting = &Server{}
-
 type DaoServer struct {
 	GrpcPort int
 }
 
-var DaoServerSetting = &DaoServer{}
+type GlobalConfig struct {
+	cfg              *ini.File
+	AppSetting       App
+	ServerSetting    Server
+	DaoServerSetting DaoServer
+}
 
-var cfg *ini.File
+var globalConfig *GlobalConfig
 
-func InitConfig() {
+func init() {
 	var err error
-	cfg, err = ini.Load("conf/app.ini")
+	globalConfig = new(GlobalConfig)
+	globalConfig.cfg, err = ini.Load("conf/app.ini")
 	if err != nil {
-		fmt.Printf("setting.Init, fail to parse app.ini: %s", err)
+		fmt.Printf("config.Init, fail to parse app.ini: %s", err)
 		panic("read config file failed")
 	}
 
-	mapTo("app", AppSetting)
-	mapTo("server", ServerSetting)
-	mapTo("dao-server", DaoServerSetting)
+	mapTo("app", globalConfig.AppSetting)
+	mapTo("server", globalConfig.ServerSetting)
+	mapTo("dao-server", globalConfig.DaoServerSetting)
 
-	ServerSetting.ReadTimeout *= time.Second
-	ServerSetting.WriteTimeout *= time.Second
+	globalConfig.ServerSetting.ReadTimeout *= time.Second
+	globalConfig.ServerSetting.WriteTimeout *= time.Second
 }
 
 // mapTo map section
 func mapTo(section string, v interface{}) {
-	err := cfg.Section(section).MapTo(v)
+	err := globalConfig.cfg.Section(section).MapTo(v)
 	if err != nil {
 		fmt.Printf("Cfg.MapTo %s err: %s", section, err)
 		panic("get config failed")
 	}
+}
+
+func GetGlobalConfig() *GlobalConfig {
+	return globalConfig
 }

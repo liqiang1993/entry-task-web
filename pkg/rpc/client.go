@@ -4,17 +4,18 @@ import (
 	"context"
 	"fmt"
 	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/app"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
 	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"time"
 )
 
 var GrpcClient UserServiceClient
 
-// InitRPC 初始化RPC
-func InitRPC() {
-	conn, err := grpc.Dial(fmt.Sprintf(":%d", setting.DaoServerSetting.GrpcPort), grpc.WithInsecure())
+func init() {
+	conn, err := grpc.Dial(fmt.Sprintf(":%d", config.GetGlobalConfig().DaoServerSetting.GrpcPort),
+		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("grpc.Dial err: %s", err)
 	}
@@ -25,7 +26,7 @@ func InitRPC() {
 // Register 注册接口
 func Register(requestID string, name string, password string) error {
 	ctx, cancel := context.WithTimeout(context.Background(),
-		time.Duration(setting.AppSetting.DeadlineSecond)*time.Second)
+		time.Duration(config.GetGlobalConfig().AppSetting.DeadlineSecond)*time.Second)
 	defer cancel()
 
 	_, err := GrpcClient.Register(ctx, &RegisterRequest{RequestID: requestID, Name: name, Password: password})
@@ -40,7 +41,7 @@ func Register(requestID string, name string, password string) error {
 // Auth 认证接口
 func Auth(requestID string, name string, password string) (string, string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(),
-		time.Duration(setting.AppSetting.DeadlineSecond)*time.Second)
+		time.Duration(config.GetGlobalConfig().AppSetting.DeadlineSecond)*time.Second)
 	defer cancel()
 
 	rsp, err := GrpcClient.Auth(ctx, &AuthRequest{RequestID: requestID, Name: name, Password: password})
@@ -55,7 +56,7 @@ func Auth(requestID string, name string, password string) (string, string, error
 // GetProfile 查询用户的属性信息
 func GetProfile(requestID string, name string) (info *app.ProfileInfo, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(),
-		time.Duration(setting.AppSetting.DeadlineSecond)*time.Second)
+		time.Duration(config.GetGlobalConfig().AppSetting.DeadlineSecond)*time.Second)
 	defer cancel()
 
 	rsp, err := GrpcClient.GetProfile(ctx, &GetProfileRequest{RequestID: requestID, Name: name})
@@ -70,7 +71,7 @@ func GetProfile(requestID string, name string) (info *app.ProfileInfo, err error
 // GetHeadImage 查询用户的头像信息
 func GetHeadImage(requestID string, imageID string) (image []byte, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(),
-		time.Duration(setting.AppSetting.DeadlineSecond)*time.Second)
+		time.Duration(config.GetGlobalConfig().AppSetting.DeadlineSecond)*time.Second)
 	defer cancel()
 
 	rsp, err := GrpcClient.GetHeadImage(ctx, &GetHeadImageRequest{RequestID: requestID, ImageID: imageID})
@@ -85,7 +86,7 @@ func GetHeadImage(requestID string, imageID string) (image []byte, err error) {
 // EditProfile 编辑用户的属性信息
 func EditProfile(requestID string, name string, nickname string, image []byte) error {
 	ctx, cancel := context.WithTimeout(context.Background(),
-		time.Duration(setting.AppSetting.DeadlineSecond)*time.Second)
+		time.Duration(config.GetGlobalConfig().AppSetting.DeadlineSecond)*time.Second)
 	defer cancel()
 
 	_, err := GrpcClient.EditProfile(ctx, &EditProfileRequest{RequestID: requestID,

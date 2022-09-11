@@ -2,7 +2,7 @@ package util
 
 import (
 	"github.com/golang-jwt/jwt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
 	"time"
 )
 
@@ -14,10 +14,14 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
+func init() {
+	jwtSecret = []byte(config.GetGlobalConfig().AppSetting.JwtSecret)
+}
+
 // GenerateToken 生成token
 func GenerateToken(name, password string) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(time.Duration(setting.AppSetting.TokenExpireHour) * time.Hour)
+	expireTime := nowTime.Add(time.Duration(config.GetGlobalConfig().AppSetting.TokenExpireHour) * time.Hour)
 
 	claims := Claims{
 		name,

@@ -16,7 +16,7 @@ type Response struct {
 	Data interface{} `json:"data"`
 }
 
-// Response setting gin.JSON
+// Response config gin.JSON
 func (g *Gin) Response(httpCode int, errCode code.ErrorStruct, data interface{}) {
 	g.C.JSON(httpCode, Response{
 		Code: errCode.Code,

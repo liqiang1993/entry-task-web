@@ -1,24 +1,24 @@
 package log
 
 import (
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
 	"github.com/natefinch/lumberjack"
 	"github.com/sirupsen/logrus"
 )
 
 var log = logrus.New()
 
-func InitLog() {
+func init() {
 	logger := &lumberjack.Logger{
-		Filename:   setting.AppSetting.LogFileName,
-		MaxSize:    setting.AppSetting.LogMaxSize,    // 日志文件大小，单位是 MB
-		MaxBackups: setting.AppSetting.LogMaxBackups, // 最大过期日志保留个数
-		MaxAge:     setting.AppSetting.LogMaxAgeDay,  // 保留过期文件最大时间，单位 天
-		Compress:   setting.AppSetting.LogCompress,   // 是否压缩日志，默认是不压缩。这里设置为true，压缩日志
+		Filename:   config.GetGlobalConfig().AppSetting.LogFileName,
+		MaxSize:    config.GetGlobalConfig().AppSetting.LogMaxSize,    // 日志文件大小，单位是 MB
+		MaxBackups: config.GetGlobalConfig().AppSetting.LogMaxBackups, // 最大过期日志保留个数
+		MaxAge:     config.GetGlobalConfig().AppSetting.LogMaxAgeDay,  // 保留过期文件最大时间，单位 天
+		Compress:   config.GetGlobalConfig().AppSetting.LogCompress,   // 是否压缩日志，默认是不压缩。这里设置为true，压缩日志
 	}
 
 	log.SetOutput(logger)
-	log.SetLevel(getLevel(setting.AppSetting.LogLevel))
+	log.SetLevel(getLevel(config.GetGlobalConfig().AppSetting.LogLevel))
 	log.SetReportCaller(true)
 	log.SetFormatter(&logrus.JSONFormatter{})
 }

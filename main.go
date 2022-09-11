@@ -2,11 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
 	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/rpc"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/setting"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/util"
 	"github.com/lucky-cheerful-man/phoenix_gateway/routers"
 	"net/http"
 	"os"
@@ -15,39 +12,25 @@ import (
 )
 
 func main() {
-	// 初始化配置
-	setting.InitConfig()
-
-	// 初始化日志
-	log.InitLog()
-
-	// 初始化工具
-	util.InitUtil()
-
-	// 初始化rpc服务
-	rpc.InitRPC()
-
 	// 信号处理
 	dealSignal()
 
-	gin.SetMode(setting.ServerSetting.RunMode)
-	routersInit := routers.InitRouter()
-	endPoint := fmt.Sprintf(":%d", setting.ServerSetting.HttpPort)
-
 	server := &http.Server{
-		Addr:           endPoint,
-		Handler:        routersInit,
-		ReadTimeout:    setting.ServerSetting.ReadTimeout,
-		WriteTimeout:   setting.ServerSetting.WriteTimeout,
-		MaxHeaderBytes: setting.AppSetting.MaxHeaderBytes,
+		Addr:           fmt.Sprintf(":%d", config.GetGlobalConfig().ServerSetting.HttpPort),
+		Handler:        routers.InitRouter(),
+		ReadTimeout:    config.GetGlobalConfig().ServerSetting.ReadTimeout,
+		WriteTimeout:   config.GetGlobalConfig().ServerSetting.WriteTimeout,
+		MaxHeaderBytes: config.GetGlobalConfig().AppSetting.MaxHeaderBytes,
 	}
 
-	log.Infof("start http server listening %s", endPoint)
+	log.Infof("ready start http server listening %s", config.GetGlobalConfig().ServerSetting.HttpPort)
 
 	err := server.ListenAndServe()
 	if err != nil {
 		log.Warnf("server init failed, err:%s", err)
 	}
+
+	log.Infof("start http server listening %s", config.GetGlobalConfig().ServerSetting.HttpPort)
 }
 
 func dealSignal() {
