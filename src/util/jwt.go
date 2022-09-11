@@ -2,7 +2,7 @@ package util
 
 import (
 	"github.com/golang-jwt/jwt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
 	"time"
 )
 

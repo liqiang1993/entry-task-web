@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
 )
 
 type Gin struct {

@@ -3,9 +3,9 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/app"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/app"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"time"

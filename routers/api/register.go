@@ -3,10 +3,10 @@ package api
 import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/app"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/rpc"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/app"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/rpc"
 	"net/http"
 )
 

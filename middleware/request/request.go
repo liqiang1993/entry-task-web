@@ -2,8 +2,8 @@ package request
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 	nanoid "github.com/matoous/go-nanoid"
 	"net/http"
 )

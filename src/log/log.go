@@ -1,7 +1,7 @@
 package log
 
 import (
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
 	"github.com/natefinch/lumberjack"
 	"github.com/sirupsen/logrus"
 )

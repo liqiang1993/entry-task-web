@@ -1,8 +1,8 @@
 package upload
 
 import (
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/config"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/file"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/file"
 	"strings"
 )
 

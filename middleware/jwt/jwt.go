@@ -3,9 +3,9 @@ package jwt
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/code"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/log"
-	"github.com/lucky-cheerful-man/phoenix_gateway/pkg/util"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/code"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/util"
 	"net/http"
 )
 
