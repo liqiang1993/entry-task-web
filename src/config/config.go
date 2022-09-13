@@ -48,15 +48,15 @@ var globalConfig *GlobalConfig
 func init() {
 	var err error
 	globalConfig = new(GlobalConfig)
-	globalConfig.cfg, err = ini.Load("localconf/app.ini")
+	globalConfig.cfg, err = ini.Load("/Users/qiang.lilq/code/go/src/phoenix_gateway/localconf/app.ini")
 	if err != nil {
 		fmt.Printf("config.Init, fail to parse app.ini: %s", err)
 		panic("read config file failed")
 	}
 
-	mapTo("app", globalConfig.AppSetting)
-	mapTo("server", globalConfig.ServerSetting)
-	mapTo("dao-server", globalConfig.DaoServerSetting)
+	mapTo("app", &globalConfig.AppSetting)
+	mapTo("server", &globalConfig.ServerSetting)
+	mapTo("dao-server", &globalConfig.DaoServerSetting)
 
 	globalConfig.ServerSetting.ReadTimeout *= time.Second
 	globalConfig.ServerSetting.WriteTimeout *= time.Second
@@ -66,7 +66,7 @@ func init() {
 func mapTo(section string, v interface{}) {
 	err := globalConfig.cfg.Section(section).MapTo(v)
 	if err != nil {
-		fmt.Printf("Cfg.MapTo %s err: %s", section, err)
+		fmt.Printf("Cfg.MapTo %s err: %s\n", section, err)
 		panic("get config failed")
 	}
 }
