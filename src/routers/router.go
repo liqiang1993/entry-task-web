@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/gin-gonic/gin" //nolint:goimports
+	"github.com/gin-gonic/gin"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/middleware/jwt"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/middleware/request"

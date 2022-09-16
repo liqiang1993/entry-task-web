@@ -24,7 +24,7 @@ func GetProfile(c *gin.Context) {
 
 	id, ok := c.Get("requestId")
 	if !ok {
-		log.Errorf("get requestId failed")
+		log.Error("get requestId failed")
 		appG.Response(http.StatusInternalServerError, constant.Error, nil)
 		return
 	}
@@ -47,7 +47,7 @@ func GetHeadImage(c *gin.Context) {
 	appG := util.Gin{C: c}
 	id, ok := c.Get("requestId")
 	if !ok {
-		log.Errorf("get requestId failed")
+		log.Error("get requestId failed")
 		appG.Response(http.StatusInternalServerError, constant.Error, nil)
 		return
 	}
@@ -55,7 +55,7 @@ func GetHeadImage(c *gin.Context) {
 
 	imageID := c.Query("imageID")
 	if len(imageID) == 0 {
-		log.Warnf("request:%s imageID length invalid", requestID)
+		log.Warn("request:%s imageID length invalid", requestID)
 		appG.Response(http.StatusBadRequest, constant.InvalidParams, nil)
 		return
 	}
@@ -85,7 +85,6 @@ func GetHeadImage(c *gin.Context) {
 }
 
 // EditProfile 编辑用户的属性信息
-//nolint:funlen
 func EditProfile(c *gin.Context) {
 	appG := util.Gin{C: c}
 	cname, ok := c.Get("name")
@@ -97,7 +96,7 @@ func EditProfile(c *gin.Context) {
 
 	id, ok := c.Get("requestId")
 	if !ok {
-		log.Errorf("get requestId failed")
+		log.Error("get requestId failed")
 		appG.Response(http.StatusInternalServerError, constant.Error, nil)
 		return
 	}
@@ -109,39 +108,39 @@ func EditProfile(c *gin.Context) {
 	file, err := c.FormFile("image")
 	if err == nil {
 		if !util.CheckImageExt(file.Filename) {
-			log.Infof("%s invalid image type %s", requestID, file.Filename)
+			log.Info("%s invalid image type %s", requestID, file.Filename)
 			appG.Response(http.StatusBadRequest, constant.ErrorUploadCheckImageExt, nil)
 			return
 		}
 
 		if !util.CheckImageSize(int(file.Size)) {
-			log.Infof("%s invalid image size %d", requestID, file.Size)
+			log.Info("%s invalid image size %d", requestID, file.Size)
 			appG.Response(http.StatusBadRequest, constant.ErrorUploadCheckImageFormat, nil)
 			return
 		}
 
 		src, err := file.Open()
 		if err != nil {
-			log.Warnf("%s open file failed:%s", requestID, err)
+			log.Warn("%s open file failed:%s", requestID, err)
 			appG.Response(http.StatusInternalServerError, constant.Error, nil)
 			return
 		}
 		defer func() {
 			err = src.Close()
 			if err != nil {
-				log.Warnf("%s close file failed,err:%s", requestID, err)
+				log.Warn("%s close file failed,err:%s", requestID, err)
 			}
 		}()
 
 		// 读取file的数据存入buf中
 		_, err = io.Copy(buf, src)
 		if err != nil {
-			log.Warnf("%s copy file failed:%s", requestID, err)
+			log.Warn("%s copy file failed:%s", requestID, err)
 			appG.Response(http.StatusInternalServerError, constant.Error, nil)
 			return
 		}
 	} else if err.Error() != "http: no such file" && err.Error() != "request Content-Type isn't multipart/form-data" {
-		log.Warnf("%s get file failed:%s", requestID, err)
+		log.Warn("%s get file failed:%s", requestID, err)
 		appG.Response(http.StatusInternalServerError, constant.Error, nil)
 		return
 	}

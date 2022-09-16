@@ -41,12 +41,12 @@ func JWT() gin.HandlerFunc {
 			var requestID string
 			id, ok := c.Get("requestId")
 			if !ok {
-				log.Errorf("get requestId failed")
+				log.Error("get requestId failed")
 			} else {
 				requestID = id.(string)
 			}
 
-			log.Warnf("%s auth failed:%+v", requestID, resCode)
+			log.Warn("%s auth failed:%+v", requestID, resCode)
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"constant": resCode.Code,
 				"msg":      resCode.Msg,

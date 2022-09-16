@@ -13,7 +13,7 @@ func GenRequestID() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestID, err := nanoid.Nanoid()
 		if err != nil {
-			log.Warnf("gen nanoid failed:%s", err)
+			log.Warn("gen nanoid failed:%s", err)
 
 			var data interface{}
 			c.JSON(http.StatusInternalServerError, gin.H{

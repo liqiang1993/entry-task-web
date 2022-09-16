@@ -20,7 +20,7 @@ func Register(c *gin.Context) {
 	appG := util.Gin{C: c}
 	id, ok := c.Get("requestId")
 	if !ok {
-		log.Errorf("get requestId failed")
+		log.Error("get requestId failed")
 		appG.Response(http.StatusInternalServerError, constant.Error, nil)
 		return
 	}

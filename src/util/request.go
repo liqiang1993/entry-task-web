@@ -8,6 +8,6 @@ import (
 // MarkErrors logs error logs
 func MarkErrors(requestID string, errors []*validation.Error) {
 	for _, err := range errors {
-		log.Infof("request:%s, err.key:%s, err.message:%s ", requestID, err.Key, err.Message)
+		log.Info("request:%s, err.key:%s, err.message:%s ", requestID, err.Key, err.Message)
 	}
 }

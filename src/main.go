@@ -1,51 +1,38 @@
 package main
 
 import (
-	"fmt"
+	"github.com/asim/go-micro/plugins/registry/etcd/v3"
+	"github.com/asim/go-micro/v3/registry"
+	"github.com/asim/go-micro/v3/web"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/routers"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func main() {
-	// 信号处理
-	dealSignal()
+	etcdReg := etcd.NewRegistry(
+		registry.Addrs("127.0.0.1:12379"),
+	)
 
-	server := &http.Server{
-		Addr:           fmt.Sprintf(":%d", config.GetGlobalConfig().ServerSetting.HttpPort),
-		Handler:        routers.InitRouter(),
-		ReadTimeout:    config.GetGlobalConfig().ServerSetting.ReadTimeout,
-		WriteTimeout:   config.GetGlobalConfig().ServerSetting.WriteTimeout,
-		MaxHeaderBytes: config.GetGlobalConfig().AppSetting.MaxHeaderBytes,
-	}
+	webService := web.NewService(
+		web.Name("phoenix_gateway"),
+		web.Address("127.0.0.1:8001"),
+		web.Handler(routers.InitRouter()),
+		web.Registry(etcdReg))
 
-	log.Infof("ready start http server listening %s", config.GetGlobalConfig().ServerSetting.HttpPort)
-
-	err := server.ListenAndServe()
+	err := webService.Init()
 	if err != nil {
-		log.Warnf("server init failed, err:%s", err)
+		log.Error("server init failed, err:%s", err)
+		return
 	}
 
-	log.Infof("start http server listening %s", config.GetGlobalConfig().ServerSetting.HttpPort)
-}
+	log.Info("ready start http server listening %s", config.GetGlobalConfig().ServerSetting.HttpPort)
 
-func dealSignal() {
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP, syscall.SIGQUIT)
+	err = webService.Run()
+	if err != nil {
+		log.Error("server run failed, err:%s", err)
+		return
+	}
 
-	go func() {
-		for s := range sigs {
-			switch s {
-			case syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP, syscall.SIGQUIT:
-				log.Warnf("got signal:%v and try to exit: ", s)
-				os.Exit(0)
-			default:
-				log.Warnf("other signal:%v: ", s)
-			}
-		}
-	}()
+	log.Info("start http server listening %s", config.GetGlobalConfig().ServerSetting.HttpPort)
 }

@@ -5,6 +5,7 @@ import (
 	pb "github.com/lucky-cheerful-man/phoenix_apis/protobuf3.pb/user_info_manage"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/config"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/log"
+	"github.com/lucky-cheerful-man/phoenix_gateway/src/server"
 	"github.com/lucky-cheerful-man/phoenix_gateway/src/util"
 
 	"time"
@@ -13,8 +14,7 @@ import (
 var GrpcClient pb.UserService
 
 func init() {
-	// 创建一个新的服务
-	pb.NewUserService("hello", clinet.DefaultClient)
+	GrpcClient = pb.NewUserService("phoenix_server", server.ReferClient())
 }
 
 // Register 注册接口
@@ -25,7 +25,7 @@ func Register(requestID string, name string, password string) error {
 
 	_, err := GrpcClient.Register(ctx, &pb.RegisterRequest{RequestID: requestID, Name: name, Password: password})
 	if err != nil {
-		log.Warnf("call Register failed, err:%v", err)
+		log.Warn("call Register failed, err:%v", err)
 		return err
 	}
 
@@ -40,7 +40,7 @@ func Auth(requestID string, name string, password string) (string, string, error
 
 	rsp, err := GrpcClient.Auth(ctx, &pb.AuthRequest{RequestID: requestID, Name: name, Password: password})
 	if err != nil {
-		log.Warnf("call Auth failed, err:%v", err)
+		log.Warn("call Auth failed, err:%v", err)
 		return "", "", err
 	}
 
@@ -55,7 +55,7 @@ func GetProfile(requestID string, name string) (info *util.ProfileInfo, err erro
 
 	rsp, err := GrpcClient.GetProfile(ctx, &pb.GetProfileRequest{RequestID: requestID, Name: name})
 	if err != nil {
-		log.Warnf("call GetProfile failed, err:%v", err)
+		log.Warn("call GetProfile failed, err:%v", err)
 		return nil, err
 	}
 
@@ -70,7 +70,7 @@ func GetHeadImage(requestID string, imageID string) (image []byte, err error) {
 
 	rsp, err := GrpcClient.GetHeadImage(ctx, &pb.GetHeadImageRequest{RequestID: requestID, ImageID: imageID})
 	if err != nil {
-		log.Warnf("call GetHeadImage failed, err:%v", err)
+		log.Warn("call GetHeadImage failed, err:%v", err)
 		return nil, err
 	}
 
@@ -86,7 +86,7 @@ func EditProfile(requestID string, name string, nickname string, image []byte) e
 	_, err := GrpcClient.EditProfile(ctx, &pb.EditProfileRequest{RequestID: requestID,
 		Name: name, Nickname: nickname, Image: image})
 	if err != nil {
-		log.Warnf("call EditProfile failed, err:%v", err)
+		log.Warn("call EditProfile failed, err:%v", err)
 		return err
 	}
 

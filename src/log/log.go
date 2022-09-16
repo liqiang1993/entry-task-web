@@ -39,22 +39,17 @@ func getLevel(level string) logrus.Level {
 	return logrus.InfoLevel
 }
 
-// Infof 封装一层info日志
-func Infof(format string, args ...interface{}) {
+// Info 封装一层info日志
+func Info(format string, args ...interface{}) {
 	log.Infof(format, args...)
 }
 
-// Warnf 封装一层warn日志
-func Warnf(format string, args ...interface{}) {
+// Warn 封装一层warn日志
+func Warn(format string, args ...interface{}) {
 	log.Warnf(format, args...)
 }
 
-// Errorf 封装一层error日志
-func Errorf(format string, args ...interface{}) {
+// Error 封装一层error日志
+func Error(format string, args ...interface{}) {
 	log.Errorf(format, args...)
-}
-
-// Fatalf 封装一层Fatal日志
-func Fatalf(format string, args ...interface{}) {
-	log.Fatalf(format, args...)
 }
