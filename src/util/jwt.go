@@ -15,6 +15,7 @@ type Claims struct {
 }
 
 func init() {
+
 	jwtSecret = []byte(config.GetGlobalConfig().AppSetting.JwtSecret)
 }
 

@@ -11,7 +11,7 @@ import (
 
 func main() {
 	etcdReg := etcd.NewRegistry(
-		registry.Addrs("127.0.0.1:12379"),
+		registry.Addrs("127.0.0.1:2379"),
 	)
 
 	webService := web.NewService(
