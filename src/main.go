@@ -20,15 +20,9 @@ func main() {
 		web.Handler(routers.InitRouter()),
 		web.Registry(etcdReg))
 
-	err := webService.Init()
-	if err != nil {
-		log.Error("server init failed, err:%s", err)
-		return
-	}
-
 	log.Info("ready start http server listening %s", config.GetGlobalConfig().ServerSetting.HttpPort)
 
-	err = webService.Run()
+	err := webService.Run()
 	if err != nil {
 		log.Error("server run failed, err:%s", err)
 		return
